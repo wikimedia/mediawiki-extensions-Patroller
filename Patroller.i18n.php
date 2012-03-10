@@ -1082,6 +1082,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Ivan Lanin
+ * @author Kenrick95
  * @author Rex
  */
 $messages['id'] = array(
@@ -1105,7 +1106,7 @@ $messages['id'] = array(
 	'patrol-stopped' => 'Anda telah memilih untuk tidak mengontrol suntingan lain. $1',
 	'patrol-resume' => 'Klik di sini untuk melanjutkan.',
 	'group-patroller' => 'Pematroli',
-	'group-patroller-member' => 'Pematroli',
+	'group-patroller-member' => '{{GENDER:$1|Pematroli}}',
 	'grouppage-patroller' => '{{ns:project}}:Pematroli',
 	'right-patroller' => 'Melakukan patroli atas halaman-halaman',
 );
