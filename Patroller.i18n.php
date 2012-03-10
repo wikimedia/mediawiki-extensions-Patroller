@@ -38,6 +38,8 @@ $messages['en'] = array(
 	'group-patroller-member' => '{{GENDER:$1|patroller}}',
 	'grouppage-patroller'    => '{{ns:project}}:Patroller',
 	'right-patroller'        => 'Patrol pages',
+	'group-patroller.css'    => '/* CSS placed here will affect patrollers only */', # only translate this message to other languages if you have to change it
+	'group-patroller.js'     => '/* JS placed here will affect patrollers only */', # only translate this message to other languages if you have to change it
 );
 
 /** Message documentation (Message documentation)
