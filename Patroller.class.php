@@ -246,7 +246,7 @@ class Patroller extends SpecialPage {
 			$old = Revision::newFromId( $edit->mAttribs['rc_last_oldid'] );
 			# Be certain we're not overwriting a more recent change
 			# If we would, ignore it, and silently consider this change patrolled
-			$latest = (int)$dbw->selectField( 'page', 'page_latest', array( 'page_id' => $title->getArticleId() ), __METHOD__ );
+			$latest = (int)$dbw->selectField( 'page', 'page_latest', array( 'page_id' => $title->getArticleID() ), __METHOD__ );
 			if( $edit->mAttribs['rc_this_oldid'] == $latest ) {
 				# Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
