@@ -1930,6 +1930,7 @@ $messages['si'] = array(
 
 /** Slovak (Slovenčina)
  * @author Helix84
+ * @author Teslaton
  */
 $messages['sk'] = array(
 	'patrol' => 'Strážiť úpravy',
@@ -1945,14 +1946,14 @@ $messages['sk'] = array(
 	'patrol-reverted-ok' => 'Úprava bola vrátená.',
 	'patrol-reverted-failed' => 'Úpravu nebolo možné vrátiť.',
 	'patrol-skipped-ok' => 'Ignorujem úpravu.',
-	'patrol-reasons' => '* Jednoduchý vandaizmus
+	'patrol-reasons' => '* Jednoduchý vandalizmus
 * Nováčikovský test
 * Pozri diskusiu',
 	'patrol-another' => 'Zobraz ďalšiu úpravu, ak existuje.',
 	'patrol-stopped' => 'Zvolili ste nestrážiť ďalšiu úpravu. $1',
 	'patrol-resume' => 'Kliknutím sem pokračujte.',
 	'group-patroller' => 'Strážcovia',
-	'group-patroller-member' => 'Strážca',
+	'group-patroller-member' => '{{GENDER:$1|Strážca|Strážkyňa}}',
 	'grouppage-patroller' => '{{ns:project}}:Strážca',
 	'right-patroller' => 'Sledovať stránky',
 );
