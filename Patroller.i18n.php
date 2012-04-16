@@ -1947,7 +1947,7 @@ $messages['sk'] = array(
 	'patrol-reverted-failed' => 'Úpravu nebolo možné vrátiť.',
 	'patrol-skipped-ok' => 'Ignorujem úpravu.',
 	'patrol-reasons' => '* Jednoduchý vandalizmus
-* Nováčikovský test
+* Testy nováčika
 * Pozri diskusiu',
 	'patrol-another' => 'Zobraz ďalšiu úpravu, ak existuje.',
 	'patrol-stopped' => 'Zvolili ste nestrážiť ďalšiu úpravu. $1',
