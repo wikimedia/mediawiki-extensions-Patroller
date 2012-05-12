@@ -1400,6 +1400,8 @@ $messages['mk'] = array(
 	'group-patroller-member' => 'патролер',
 	'grouppage-patroller' => '{{ns:project}}:Патролер',
 	'right-patroller' => 'Патролирани страници',
+	'group-patroller.css' => '/* Тука поставениот CSS ќе се применува само врз патролери */',
+	'group-patroller.js' => '/* Тука поставениот JS ќе се применува само врз патролери */',
 );
 
 /** Malayalam (മലയാളം)
@@ -1601,6 +1603,7 @@ $messages['nl'] = array(
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Njardarlogar
  */
 $messages['nn'] = array(
 	'patrol' => 'Patruljer endringar',
@@ -2173,7 +2176,7 @@ $messages['tg-cyrl'] = array(
 	'patrol-skip' => 'Ҷаҳиш',
 );
 
-/** Tajik (Latin script) (tojikī)
+/** Tajik (Latin script) (Tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -2328,7 +2331,7 @@ $messages['vec'] = array(
 	'group-patroller-member' => 'patujador',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
