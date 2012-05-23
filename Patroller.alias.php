@@ -30,7 +30,7 @@ $specialPageAliases['br'] = array(
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
-	'Patroller' => array( 'Prüfer' ),
+	'Patroller' => array( 'Kontrollierer', 'Prüfer' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
