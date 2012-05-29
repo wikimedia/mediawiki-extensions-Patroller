@@ -50,6 +50,7 @@ $messages['en'] = array(
  * @author Purodha
  * @author The Evil IP address
  * @author Umherirrender
+ * @author 아라
  */
 $messages['qqq'] = array(
 	'patrol-desc' => '{{desc}}',
@@ -63,6 +64,8 @@ $messages['qqq'] = array(
 	'group-patroller-member' => '{{doc-group|patroller|member}}',
 	'grouppage-patroller' => '{{doc-group|patroller|page}}',
 	'right-patroller' => '{{doc-right|patroller}}',
+	'group-patroller.css' => '{{doc-group|patroller}}',
+	'group-patroller.js' => '{{doc-group|patroller}}',
 );
 
 /** Niuean (ko e vagahau Niuē)
@@ -1263,10 +1266,14 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Devunt
  * @author Kwj2772
+ * @author 아라
  */
 $messages['ko'] = array(
 	'group-patroller' => '검토자',
 	'group-patroller-member' => '{{GENDER:$1|검토자}}',
+	'grouppage-patroller' => '{{ns:project}}:검토자',
+	'group-patroller.css' => '/* 이 CSS 설정은 검토자에만 적용됩니다 */',
+	'group-patroller.js' => '/* 이 자바스크립트 설정은 검토자에만 적용됩니다 */',
 );
 
 /** Colognian (Ripoarisch)
