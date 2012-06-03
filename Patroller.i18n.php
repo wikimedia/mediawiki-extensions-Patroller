@@ -1201,12 +1201,13 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Shirayuki
  * @author Whym
  * @author 青子守歌
  */
 $messages['ja'] = array(
 	'patrol' => '編集をパトロール',
-	'patrol-desc' => 'パトロール負荷を共有する機能をもつ、パトロール機能の拡張インタフェース',
+	'patrol-desc' => 'パトロール負荷共有機能を持つ、パトロール機能の拡張インターフェイス',
 	'patrol-endorse' => '承認',
 	'patrol-revert' => '差し戻し',
 	'patrol-revert-reason' => '理由：',
