@@ -1227,8 +1227,8 @@ $messages['ja'] = array(
 	'patrol-resume' => '再開するにはここをクリックしてください。',
 	'group-patroller' => '巡回者',
 	'group-patroller-member' => '{{GENDER:$1|巡回者}}',
-	'grouppage-patroller' => '{{ns:project}}:パトローラー',
-	'right-patroller' => 'ページをパトロールする',
+	'grouppage-patroller' => '{{ns:project}}:巡回者',
+	'right-patroller' => 'ページをパトロール',
 );
 
 /** Javanese (Basa Jawa)
