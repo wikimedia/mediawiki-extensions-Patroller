@@ -23,7 +23,7 @@ $specialPageAliases['arz'] = array(
 	'Patroller' => array( 'نبطشى' ),
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $specialPageAliases['br'] = array(
 	'Patroller' => array( 'Patrouilher' ),
 );
@@ -31,6 +31,11 @@ $specialPageAliases['br'] = array(
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'Patroller' => array( 'Kontrollierer', 'Prüfer' ),
+);
+
+/** Zazaki (Zazaki) */
+$specialPageAliases['diq'] = array(
+	'Patroller' => array( 'Dewriye' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
@@ -48,17 +53,17 @@ $specialPageAliases['fa'] = array(
 	'Patroller' => array( 'گشت‌زن' ),
 );
 
-/** Finnish (Suomi) */
+/** Finnish (suomi) */
 $specialPageAliases['fi'] = array(
 	'Patroller' => array( 'Muokkausten_tarkistaja' ),
 );
 
-/** French (Français) */
+/** French (français) */
 $specialPageAliases['fr'] = array(
 	'Patroller' => array( 'Patrouilleur' ),
 );
 
-/** Franco-Provençal (Arpetan) */
+/** Franco-Provençal (arpetan) */
 $specialPageAliases['frp'] = array(
 	'Patroller' => array( 'Patrolyor' ),
 );
@@ -68,7 +73,7 @@ $specialPageAliases['gsw'] = array(
 	'Patroller' => array( 'Fäldhieter' ),
 );
 
-/** Croatian (Hrvatski) */
+/** Croatian (hrvatski) */
 $specialPageAliases['hr'] = array(
 	'Patroller' => array( 'Patroler' ),
 );
@@ -83,7 +88,7 @@ $specialPageAliases['ht'] = array(
 	'Patroller' => array( 'Siveyan' ),
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $specialPageAliases['ia'] = array(
 	'Patroller' => array( 'Patruliator' ),
 );
@@ -96,6 +101,11 @@ $specialPageAliases['id'] = array(
 /** Japanese (日本語) */
 $specialPageAliases['ja'] = array(
 	'Patroller' => array( 'パトローラー', 'パトローラ' ),
+);
+
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'Patroller' => array( '검토자' ),
 );
 
 /** Colognian (Ripoarisch) */
@@ -113,7 +123,7 @@ $specialPageAliases['lb'] = array(
 	'Patroller' => array( 'Kontroller' ),
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $specialPageAliases['mk'] = array(
 	'Patroller' => array( 'Патролер' ),
 );
@@ -128,7 +138,7 @@ $specialPageAliases['mr'] = array(
 	'Patroller' => array( 'गस्तदार' ),
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $specialPageAliases['nb'] = array(
 	'Patroller' => array( 'Patruljør' ),
 );
@@ -143,12 +153,12 @@ $specialPageAliases['nl'] = array(
 	'Patroller' => array( 'Controleren' ),
 );
 
-/** Occitan (Occitan) */
+/** Occitan (occitan) */
 $specialPageAliases['oc'] = array(
 	'Patroller' => array( 'Patrolhaire' ),
 );
 
-/** Romanian (Română) */
+/** Romanian (română) */
 $specialPageAliases['ro'] = array(
 	'Patroller' => array( 'Patrulă' ),
 );
@@ -158,12 +168,12 @@ $specialPageAliases['sa'] = array(
 	'Patroller' => array( 'पॅटरोलर' ),
 );
 
-/** Slovak (Slovenčina) */
+/** Slovak (slovenčina) */
 $specialPageAliases['sk'] = array(
 	'Patroller' => array( 'Strážca' ),
 );
 
-/** Albanian (Shqip) */
+/** Albanian (shqip) */
 $specialPageAliases['sq'] = array(
 	'Patroller' => array( 'Patrullues' ),
 );
