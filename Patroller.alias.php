@@ -23,6 +23,11 @@ $specialPageAliases['arz'] = array(
 	'Patroller' => array( 'نبطشى' ),
 );
 
+/** Assamese (অসমীয়া) */
+$specialPageAliases['as'] = array(
+	'Patroller' => array( 'পৰিদৰ্শক' ),
+);
+
 /** Breton (brezhoneg) */
 $specialPageAliases['br'] = array(
 	'Patroller' => array( 'Patrouilher' ),
@@ -38,7 +43,7 @@ $specialPageAliases['diq'] = array(
 	'Patroller' => array( 'Dewriye' ),
 );
 
-/** Lower Sorbian (Dolnoserbski) */
+/** Lower Sorbian (dolnoserbski) */
 $specialPageAliases['dsb'] = array(
 	'Patroller' => array( 'Doglědowaŕ' ),
 );
@@ -78,7 +83,7 @@ $specialPageAliases['hr'] = array(
 	'Patroller' => array( 'Patroler' ),
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
+/** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
 	'Patroller' => array( 'Dohladowar' ),
 );
