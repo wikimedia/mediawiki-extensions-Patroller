@@ -125,7 +125,7 @@ $messages['am'] = array(
 	'patrol-revert-reason' => 'ምክንያት:',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -277,7 +277,7 @@ $messages['be'] = array(
 	'patrol-revert-reason' => 'Прычына:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -443,6 +443,7 @@ $messages['cs'] = array(
 );
 
 /** Welsh (Cymraeg)
+ * @author Lloffiwr
  * @author Xxglennxx
  */
 $messages['cy'] = array(
@@ -525,7 +526,7 @@ $messages['diq'] = array(
 	'group-patroller-member' => 'dewriye',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -829,7 +830,7 @@ $messages['fy'] = array(
 	'patrol-revert' => 'Werom sette',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Alma
  * @author Toliño
  * @author Xosé
@@ -1015,7 +1016,7 @@ $messages['hr'] = array(
 	'right-patroller' => 'Patroliranje stranica',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -1926,7 +1927,7 @@ $messages['ru'] = array(
 	'right-patroller' => 'Патрулирование страниц',
 );
 
-/** Rusyn (Русиньскый)
+/** Rusyn (русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
@@ -2170,7 +2171,7 @@ $messages['sv'] = array(
 	'right-patroller' => 'Patrullera sidor',
 );
 
-/** Silesian (Ślůnski)
+/** Silesian (ślůnski)
  * @author Herr Kriss
  */
 $messages['szl'] = array(
