@@ -2258,7 +2258,7 @@ $messages['tl'] = array(
 	'patrol-stopped' => 'Pinili mong huwag magpatrolya ng iba pang pagbabago. $1',
 	'patrol-resume' => 'Pindutin dito upang magpatuloy.',
 	'group-patroller' => 'Mga tagapatrolya',
-	'group-patroller-member' => 'tagapatrolya',
+	'group-patroller-member' => '{{GENDER:$1|tagapatrolya}}',
 	'grouppage-patroller' => '{{ns:project}}:Tagapatrolya',
 	'right-patroller' => 'Patrulyahan ang mga pahina',
 );
