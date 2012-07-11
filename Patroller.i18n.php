@@ -229,7 +229,7 @@ $messages['az'] = array(
 	'group-patroller-member' => 'patrul',
 );
 
-/** Bashkir (Башҡортса)
+/** Bashkir (башҡортса)
  * @author Assele
  * @author Haqmar
  */
@@ -422,7 +422,7 @@ $messages['ca'] = array(
 	'grouppage-patroller' => '{{ns:project}}:Patrullers',
 );
 
-/** Chechen (Нохчийн) */
+/** Chechen (нохчийн) */
 $messages['ce'] = array(
 	'patrol-revert-reason' => 'Бахьан:',
 );
@@ -1395,7 +1395,7 @@ $messages['mg'] = array(
 	'group-patroller-member' => 'Mpitsidika',
 );
 
-/** Eastern Mari (Олык Марий)
+/** Eastern Mari (олык марий)
  * @author Сай
  */
 $messages['mhr'] = array(
@@ -1538,7 +1538,7 @@ $messages['ms'] = array(
 	'right-patroller' => 'Meronda laman',
 );
 
-/** Erzya (Эрзянь)
+/** Erzya (эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
@@ -1556,9 +1556,7 @@ $messages['nah'] = array(
 	'group-patroller' => 'Tlapîpiànimë',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'patrol' => 'Patruljer redigeringer',
 	'patrol-desc' => 'Forbedret patruljeringsgrensesnitt med arbeidsfordeling',
@@ -1580,7 +1578,7 @@ $messages['nb'] = array(
 	'patrol-stopped' => 'Du har valgt å ikke patruljere en annen redigering. $1',
 	'patrol-resume' => 'Klikk her for å fortsette.',
 	'group-patroller' => 'Patruljører',
-	'group-patroller-member' => 'patruljør',
+	'group-patroller-member' => '{{GENDER:$1|patruljør}}',
 	'grouppage-patroller' => '{{ns:project}}:Patruljør',
 	'right-patroller' => 'Patruljere sider',
 );
@@ -2361,7 +2359,7 @@ $messages['vec'] = array(
 	'group-patroller-member' => 'patujador',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
