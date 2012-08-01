@@ -1588,7 +1588,7 @@ $messages['nb'] = array(
  */
 $messages['nds-nl'] = array(
 	'group-patroller' => 'kontroleurs',
-	'group-patroller-member' => 'kontroleur',
+	'group-patroller-member' => '{{GENDER:$1kontroleur}}',
 );
 
 /** Nepali (नेपाली)
