@@ -520,10 +520,11 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Aspar
+ * @author Erdemaslancan
  */
 $messages['diq'] = array(
 	'group-patroller' => 'dewriyeyi',
-	'group-patroller-member' => 'dewriye',
+	'group-patroller-member' => '{{GENDER:$1|dewriye}}',
 );
 
 /** Lower Sorbian (dolnoserbski)
