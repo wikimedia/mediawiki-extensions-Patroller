@@ -2260,6 +2260,8 @@ $messages['tl'] = array(
 	'group-patroller-member' => '{{GENDER:$1|tagapatrolya}}',
 	'grouppage-patroller' => '{{ns:project}}:Tagapatrolya',
 	'right-patroller' => 'Patrulyahan ang mga pahina',
+	'group-patroller.css' => '/* Ang inilagay na Mga Pilas ng Estilong Lumalagaslas (Cascading Style Sheets o CSS) dito ay makakaapekto lamang sa mga tagapagpatrolya */',
+	'group-patroller.js' => '/* Ang JavaScript o JS na inilagay dito ay makakaapekto lamang sa mga tagapagpatrolya */',
 );
 
 /** Turkish (Türkçe)
