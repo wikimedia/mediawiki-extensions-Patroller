@@ -1953,9 +1953,12 @@ $messages['sh'] = array(
 /** Sinhala (සිංහල)
  * @author Calcey
  * @author Singhalawap
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
+	'patrol-revert-reason' => 'හේතුව:',
+	'patrol-skip' => 'මඟ හරින්න',
 	'group-patroller' => 'මුර සංචාරකයන්',
 	'group-patroller-member' => '{{GENDER:$1|මුර-සංචාරක}}',
 );
