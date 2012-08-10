@@ -1250,12 +1250,17 @@ $messages['jv'] = array(
 /** Georgian (ქართული)
  * @author Alsandro
  * @author BRUTE
+ * @author David1010
  * @author Malafaya
  */
 $messages['ka'] = array(
+	'patrol-revert' => 'დაბრუნება',
 	'patrol-revert-reason' => 'მიზეზი:',
+	'patrol-skip' => 'გამოტოვება',
+	'patrol-reverting' => 'დაბრუნება: $1',
 	'group-patroller' => 'პატრულები',
-	'group-patroller-member' => 'პატროლიორი',
+	'group-patroller-member' => '{{GENDER:$1|პატრული}}',
+	'grouppage-patroller' => '{{ns:project}}:პატრული',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1655,8 +1660,8 @@ $messages['nn'] = array(
 	'patrol-stopped' => 'Du har valt å ikkje patruljera ei anna endring. $1',
 	'patrol-resume' => 'Trykk her for å halda fram.',
 	'group-patroller' => 'Endringsvaktarar',
-	'group-patroller-member' => 'endringsvaktar',
-	'grouppage-patroller' => '{{ns:project}}:Endringsvaktar',
+	'group-patroller-member' => '{{GENDER:$1|patruljør}}',
+	'grouppage-patroller' => '{{ns:project}}:Patruljørar',
 	'right-patroller' => 'Patruljera sider',
 );
 
