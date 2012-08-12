@@ -1258,9 +1258,14 @@ $messages['ka'] = array(
 	'patrol-revert-reason' => 'მიზეზი:',
 	'patrol-skip' => 'გამოტოვება',
 	'patrol-reverting' => 'დაბრუნება: $1',
+	'patrol-skipped-ok' => 'რედაქტირების იგნორირება.',
+	'patrol-reasons' => '* უბრალო ვანდალიზმი
+* ახალბედის ტესტი
+* იხილეთ განხილვის გვერდი',
 	'group-patroller' => 'პატრულები',
 	'group-patroller-member' => '{{GENDER:$1|პატრული}}',
 	'grouppage-patroller' => '{{ns:project}}:პატრული',
+	'right-patroller' => 'გვერდების პატრულირება',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2183,6 +2188,32 @@ $messages['sv'] = array(
  */
 $messages['szl'] = array(
 	'patrol-revert-reason' => 'Čymu:',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ * @author Shanmugamp7
+ */
+$messages['ta'] = array(
+	'patrol' => 'தொகுப்புகளை ரோந்திடு',
+	'patrol-revert' => 'முன்நிலையாக்கு',
+	'patrol-revert-reason' => 'காரணம்:',
+	'patrol-skip' => 'தவிர்',
+	'patrol-reverting' => 'முன்நிலையாக்குகிறது: $1',
+	'patrol-nonefound' => 'ரோந்திடுவதற்கான சரியான தொகுப்புகள் ஏதும் காணப்படவில்லை.',
+	'patrol-endorsed-ok' => 'தொகுப்பு ரோந்திடப்பட்டதாக குறிக்கப்பட்டது.',
+	'patrol-endorsed-failed' => 'தொகுப்பு ரோந்திடப்பட்டதாக குறிக்கப்பட இயலாது.',
+	'patrol-reverted-ok' => 'தொகுப்பு முன்நிலையாக்கப்பட்டுள்ளது.',
+	'patrol-skipped-ok' => 'தொகுப்பை நிராகரிக்கிறது.',
+	'patrol-reasons' => '* எளிய விசமத்தனம்
+* புதுப்பயனர் சோதனை
+* பேச்சுப் பக்கம் பார்க்க',
+	'patrol-another' => 'உள்ளதெனில், மற்றொரு தொகுப்பை காட்டவும்.',
+	'patrol-stopped' => 'நீங்கள் மற்றொரு தொகுப்பை ரோந்திடவில்லை என தேர்வு செய்துள்ளீர்கள். $1',
+	'group-patroller' => 'ரோந்திடுபவர்கள்',
+	'group-patroller-member' => '{{GENDER:$1|ரோந்திடுபவர்}}',
+	'grouppage-patroller' => '{{ns:project}}:ரோந்திடுபவர்கள்',
+	'right-patroller' => 'பக்கங்களை ரோந்திடு',
 );
 
 /** Telugu (తెలుగు)
