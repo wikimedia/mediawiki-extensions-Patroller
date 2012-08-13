@@ -651,9 +651,12 @@ $messages['es'] = array(
 );
 
 /** Estonian (eesti)
+ * @author Avjoska
  * @author Pikne
  */
 $messages['et'] = array(
+	'patrol-revert-reason' => 'Põhjus:',
+	'patrol-skip' => 'Jäta vahele',
 	'group-patroller' => 'Kontrollijad',
 	'group-patroller-member' => 'kontrollija',
 	'grouppage-patroller' => '{{ns:project}}:Kontrollijad',
@@ -1549,6 +1552,13 @@ $messages['ms'] = array(
 	'right-patroller' => 'Meronda laman',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'patrol-revert-reason' => 'Raġuni:',
+);
+
 /** Erzya (эрзянь)
  * @author Botuzhaleny-sodamo
  */
@@ -1967,6 +1977,7 @@ $messages['sh'] = array(
  * @author බිඟුවා
  */
 $messages['si'] = array(
+	'patrol-revert' => 'ප්‍රතිවර්තනය',
 	'patrol-revert-reason' => 'හේතුව:',
 	'patrol-skip' => 'මඟ හරින්න',
 	'group-patroller' => 'මුර සංචාරකයන්',
