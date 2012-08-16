@@ -834,6 +834,13 @@ $messages['fy'] = array(
 	'patrol-revert' => 'Werom sette',
 );
 
+/** Irish (Gaeilge)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ga'] = array(
+	'patrol-revert-reason' => 'Fáth:',
+);
+
 /** Galician (galego)
  * @author Alma
  * @author Toliño
