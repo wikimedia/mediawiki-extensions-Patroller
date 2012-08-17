@@ -2406,9 +2406,13 @@ $messages['uk'] = array(
 	'right-patroller' => 'Патрулювання сторінок',
 );
 
-/** Urdu (اردو) */
+/** Urdu (اردو)
+ * @author පසිඳු කාවින්ද
+ */
 $messages['ur'] = array(
+	'patrol-revert' => 'الٹا واپس',
 	'patrol-revert-reason' => 'وجہ:',
+	'patrol-skip' => 'پر',
 );
 
 /** vèneto (vèneto)
