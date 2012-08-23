@@ -663,13 +663,14 @@ $messages['et'] = array(
 );
 
 /** Basque (euskara)
+ * @author An13sa
  * @author Kobazulo
  * @author Unai Fdz. de Betoño
  */
 $messages['eu'] = array(
 	'patrol-revert-reason' => 'Arrazoia:',
 	'group-patroller' => 'Patruilariak',
-	'group-patroller-member' => 'patruilaria',
+	'group-patroller-member' => '{{GENDER:$1|patruilalaria}}',
 	'grouppage-patroller' => '{{ns:project}}:Patruilaria',
 	'right-patroller' => 'Orriak patruilatu',
 );
