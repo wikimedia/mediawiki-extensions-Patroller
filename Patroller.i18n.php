@@ -1659,7 +1659,7 @@ $messages['nl'] = array(
 	'right-patroller' => "Pagina's markeren",
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  * @author Jon Harald Søby
  * @author Njardarlogar

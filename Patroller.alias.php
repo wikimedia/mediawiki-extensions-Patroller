@@ -143,7 +143,7 @@ $specialPageAliases['mr'] = array(
 	'Patroller' => array( 'गस्तदार' ),
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $specialPageAliases['nb'] = array(
 	'Patroller' => array( 'Patruljør' ),
 );
