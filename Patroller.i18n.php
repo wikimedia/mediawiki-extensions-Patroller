@@ -277,7 +277,7 @@ $messages['be'] = array(
 	'patrol-revert-reason' => 'Прычына:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -510,7 +510,7 @@ $messages['de'] = array(
 	'right-patroller' => 'Seiten kontrollieren',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Raimond Spekking
  */
 $messages['de-formal'] = array(
@@ -933,7 +933,7 @@ $messages['gv'] = array(
 	'patrol-revert-reason' => 'Fa:',
 );
 
-/** Hausa (هَوُسَ) */
+/** Hausa (Hausa) */
 $messages['ha'] = array(
 	'patrol-revert-reason' => 'Dalili:',
 );
@@ -1587,7 +1587,7 @@ $messages['nah'] = array(
 	'group-patroller' => 'Tlapîpiànimë',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'patrol' => 'Patruljer redigeringer',
 	'patrol-desc' => 'Forbedret patruljeringsgrensesnitt med arbeidsfordeling',
@@ -2062,7 +2062,7 @@ $messages['sq'] = array(
 	'group-patroller-member' => 'inspektorues',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
@@ -2090,7 +2090,7 @@ $messages['sr-ec'] = array(
 	'right-patroller' => 'Патролирање страна',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬)
+/** Serbian (Latin script) (srpski (latinica)‎)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -2524,7 +2524,7 @@ $messages['yue'] = array(
 	'grouppage-patroller' => '{{ns:project}}:巡邏員',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Gzdavidwong
  * @author Liangent
  * @author Shinjiman
@@ -2556,7 +2556,7 @@ $messages['zh-hans'] = array(
 	'right-patroller' => '巡查页面',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Frankou
  * @author KilluaZaoldyeck
  * @author Mark85296341
