@@ -1,76 +1,79 @@
 <?php
-
 /**
- * Class file for the Patroller extension
+ * Patroller
+ * Patroller MediaWiki hooks
  *
- * @file
- * @ingroup Extensions
- * @author Rob Church <robchur@gmail.com>
- * @copyright © 2006 Rob Church
- * @licence GNU General Public Licence 2.0
+ * @author: Rob Church <robchur@gmail.com>, Kris Blair (Cblair91)
+ * @copyright: 2006-2008 Rob Church, 2015 Kris Blair
+ * @license: GPL General Public Licence 2.0
+ * @package: Patroller
+ * @link: https://mediawiki.org/wiki/Extension:Patroller
  */
 
 class Patroller extends SpecialPage {
-
 	/**
 	 * Constructor
+	 *
+	 * @return	void
 	 */
 	public function __construct() {
 		parent::__construct( 'Patrol', 'patroller' );
 	}
 
 	/**
-	 * @param $par Parameters passed to the page
+	 * Execution
+	 *
+	 * @access	public
+	 * @param	array	Parameters passed to the page
+	 * @return	void
 	 */
 	public function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
 
-		
-
 		$this->setHeaders();
 
 		# Check permissions
-		if( !$wgUser->isAllowed( 'patroller' ) ) {
+		if ( !$wgUser->isAllowed( 'patroller' ) ) {
 			$wgOut->permissionRequired( 'patroller' );
 			return;
 		}
 
 		# Keep out blocked users
-		if( $wgUser->isBlocked() ) {
+		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
 		}
 
 		# Prune old assignments if needed
-		if( 0 == mt_rand( 0, 499 ) )
+		if ( 0 == mt_rand( 0, 499 ) ) {
 			$this->pruneAssignments();
+		}
 
 		# See if something needs to be done
-		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'wpToken' ) ) ) {
-			if( $rcid = $wgRequest->getIntOrNull( 'wpRcId' ) ) {
-				if( $wgRequest->getCheck( 'wpPatrolEndorse' ) ) {
+		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'wpToken' ) ) ) {
+			if ( $rcid = $wgRequest->getIntOrNull( 'wpRcId' ) ) {
+				if ( $wgRequest->getCheck( 'wpPatrolEndorse' ) ) {
 					# Mark the change patrolled
-					if( !$wgUser->isBlocked( false ) ) {
+					if ( !$wgUser->isBlocked( false ) ) {
 						RecentChange::markPatrolled( $rcid );
 						$wgOut->setSubtitle( wfMsgHtml( 'patrol-endorsed-ok' ) );
 					} else {
 						$wgOut->setSubtitle( wfMsgHtml( 'patrol-endorsed-failed' ) );
 					}
-				} elseif( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
+				} elseif ( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
 					# Revert the change
 					$edit = $this->loadChange( $rcid );
 					$msg = $this->revert( $edit, $this->revertReason( $wgRequest ) ) ? 'ok' : 'failed';
 					$wgOut->setSubtitle( wfMsgHtml( 'patrol-reverted-' . $msg ) );
-				} elseif( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
-					# Do bugger all, for now
+				} elseif ( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
+					# Do nothing
 					$wgOut->setSubtitle( wfMsgHtml( 'patrol-skipped-ok' ) );
 				}
 			}
 		}
 
-		# If a token was passed, but the check box value was not, then
-		# the user wants to pause or stop patrolling
-		if( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
+		# If a token was passed, but the check box value was not, then the user wants to pause or stop patrolling
+		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin =& $wgUser->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
 			$link = $skin->makeKnownLinkObj( $self, wfMsgHtml( 'patrol-resume' ) );
@@ -80,16 +83,16 @@ class Patroller extends SpecialPage {
 
 		# Pop an edit off recentchanges
 		$haveEdit = false;
-		while( !$haveEdit ) {
+		while ( !$haveEdit ) {
 			$edit = $this->fetchChange( $wgUser );
-			if( $edit ) {
+			if ( $edit ) {
 				# Attempt to assign it
-				if( $this->assignChange( $edit ) ) {
+				if ( $this->assignChange( $edit ) ) {
 					$haveEdit = true;
 					$this->showDiffDetails( $edit );
-					$wgOut->addHTML( '<br /><hr />' );
+					$wgOut->addHTML( '<br><hr>' );
 					$this->showDiff( $edit );
-					$wgOut->addHTML( '<br /><hr />' );
+					$wgOut->addHTML( '<br><hr>' );
 					$this->showControls( $edit );
 				}
 			} else {
@@ -103,22 +106,24 @@ class Patroller extends SpecialPage {
 	/**
 	 * Produce a stub recent changes listing for a single diff.
 	 *
-	 * @param $edit Diff. to show the listing for
+	 * @access	private
+	 * @param	class	Diff. to show the listing for
+	 * @return	void
 	 */
 	private function showDiffDetails( &$edit ) {
 		global $wgUser, $wgOut;
 		$edit->counter = 1;
 		$edit->mAttribs['rc_patrolled'] = 1;
 		$list = ChangesList::newFromUser( $wgUser );
-		$wgOut->addHTML( $list->beginRecentChangesList() .
-						 $list->recentChangesLine( $edit ) .
-						 $list->endRecentChangesList() );
+		$wgOut->addHTML( $list->beginRecentChangesList() . $list->recentChangesLine( $edit ) . $list->endRecentChangesList() );
 	}
 
 	/**
 	 * Output a trimmed down diff view corresponding to a particular change
 	 *
-	 * @param $edit Recent change to produce a diff. for
+	 * @access	private
+	 * @param	class	Recent change to produce a diff for
+	 * @return	void
 	 */
 	private function showDiff( &$edit ) {
 		$diff = new DifferenceEngine( $edit->getTitle(), $edit->mAttribs['rc_last_oldid'], $edit->mAttribs['rc_this_oldid'] );
@@ -128,7 +133,9 @@ class Patroller extends SpecialPage {
 	/**
 	 * Output a bunch of controls to let the user endorse, revert and skip changes
 	 *
-	 * @param $edit RecentChange being dealt with
+	 * @access	private
+	 * @param	class	RecentChange being dealt with
+	 * @return	void
 	 */
 	private function showControls( &$edit ) {
 		global $wgUser, $wgOut;
@@ -154,8 +161,9 @@ class Patroller extends SpecialPage {
 	 *   - hasn't been patrolled
 	 *   - isn't assigned to a user
 	 *
-	 * @param $user User to suppress edits for
-	 * @return RecentChange
+	 * @access	private
+	 * @param	class	User to suppress edits for
+	 * @return	boolean	RecentChange
 	 */
 	private function fetchChange( &$user ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -166,7 +174,7 @@ class Patroller extends SpecialPage {
 				AND rc_this_oldid = page_latest AND rc_bot = 0 AND rc_patrolled = 0 AND rc_type = 0
 				AND rc_user != $uid AND ptr_timestamp IS NULL LIMIT 0,1";
 		$res = $dbr->query( $sql, 'Patroller::fetchChange' );
-		if( $dbr->numRows( $res ) > 0 ) {
+		if ( $dbr->numRows( $res ) > 0 ) {
 			$row = $dbr->fetchObject( $res );
 			$dbr->freeResult( $res );
 			return RecentChange::newFromRow( $row, $row->rc_last_oldid );
@@ -179,13 +187,14 @@ class Patroller extends SpecialPage {
 	/**
 	 * Fetch a particular recent change given the rc_id value
 	 *
-	 * @param $rcid rc_id value of the row to fetch
-	 * @return RecentChange
+	 * @access	private
+	 * @param	integer	rc_id value of the row to fetch
+	 * @return	boolean	RecentChange
 	 */
 	private function loadChange( $rcid ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'recentchanges', '*', array( 'rc_id' => $rcid ), 'Patroller::loadChange' );
-		if( $dbr->numRows( $res ) > 0 ) {
+		if ( $dbr->numRows( $res ) > 0 ) {
 			$row = $dbr->fetchObject( $res );
 			return RecentChange::newFromRow( $row );
 		} else {
@@ -194,24 +203,27 @@ class Patroller extends SpecialPage {
 	}
 
 	/**
-	 * Assign the patrolling of a particular change, so
-	 * other users don't pull it up, duplicating effort
+	 * Assign the patrolling of a particular change, so other users don't pull it up, duplicating effort
 	 *
-	 * @param $edit RecentChange item to assign
-	 * @return bool
+	 * @access	private
+	 * @param	string	RecentChange item to assign
+	 * @return	boolean	If rows were changed
 	 */
 	private function assignChange( &$edit ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$val = array( 'ptr_change' => $edit->mAttribs['rc_id'], 'ptr_timestamp' => $dbw->timestamp() );
 		$res = $dbw->insert( 'patrollers', $val, 'Patroller::assignChange', 'IGNORE' );
-		return (bool)$dbw->affectedRows();
+		return (bool) $dbw->affectedRows();
 	}
 
 	/**
 	 * Remove the assignment for a particular change, to let another user handle it
 	 *
+	 * @access	private
+	 * @param	integer	rc_id value
+	 * @return	void
+	 *
 	 * @todo Use it or lose it
-	 * @param $rcid rc_id value
 	 */
 	private function unassignChange( $rcid ) {
 		$dbw = wfGetDB( DB_MASTER );
@@ -222,6 +234,9 @@ class Patroller extends SpecialPage {
 	 * Prune old assignments from the table so edits aren't
 	 * hidden forever because a user wandered off, and to
 	 * keep the table size down as regards old assignments
+	 *
+	 * @access	private
+	 * @return	void
 	 */
 	private function pruneAssignments() {
 		$dbw = wfGetDB( DB_MASTER );
@@ -231,12 +246,14 @@ class Patroller extends SpecialPage {
 	/**
 	 * Revert a change, setting the page back to the "old" version
 	 *
-	 * @param $edit RecentChange to revert
-	 * @param $comment Comment to use when reverting
+	 * @access	private
+	 * @param	class	RecentChange to revert
+	 * @param	string	Comment to use when reverting
+	 * @return	boolean	Change was reverted
 	 */
 	private function revert( &$edit, $comment = '' ) {
 		global $wgUser;
-		if( !$wgUser->isBlocked( false ) ) { # Check block against master
+		if ( !$wgUser->isBlocked( false ) ) { # Check block against master
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->begin();
 			$title = $edit->getTitle();
@@ -247,7 +264,7 @@ class Patroller extends SpecialPage {
 			# Be certain we're not overwriting a more recent change
 			# If we would, ignore it, and silently consider this change patrolled
 			$latest = (int)$dbw->selectField( 'page', 'page_latest', array( 'page_id' => $title->getArticleID() ), __METHOD__ );
-			if( $edit->mAttribs['rc_this_oldid'] == $latest ) {
+			if ( $edit->mAttribs['rc_this_oldid'] == $latest ) {
 				# Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
 				$article = new Article( $title );
@@ -266,23 +283,26 @@ class Patroller extends SpecialPage {
 	 * Make a nice little drop-down box containing all the pre-defined revert
 	 * reasons for simplified selection
 	 *
-	 * @return string
+	 * @access	private
+	 * @return	string	Reasons
 	 */
 	private function revertReasonsDropdown() {
 		$msg = wfMsgForContent( 'patrol-reasons' );
-		if( $msg == '-' || $msg == '&lt;patrol-reasons&gt;' ) {
+		if ( $msg == '-' || $msg == '&lt;patrol-reasons&gt;' ) {
 			return '';
 		} else {
 			$reasons = array();
 			$lines = explode( "\n", $msg );
-			foreach( $lines as $line ) {
-				if( substr( $line, 0, 1 ) == '*' )
+			foreach ( $lines as $line ) {
+				if ( substr( $line, 0, 1 ) == '*' ) {
 					$reasons[] = trim( $line, '* ' );
+				}
 			}
-			if( count( $reasons ) > 0 ) {
+			if ( count( $reasons ) > 0 ) {
 				$box = Xml::openElement( 'select', array( 'name' => 'wpPatrolRevertReasonCommon' ) );
-				foreach( $reasons as $reason )
+				foreach ( $reasons as $reason ) {
 					$box .= Xml::element( 'option', array( 'value' => $reason ), $reason );
+				}
 				$box .= Xml::closeElement( 'select' );
 				return $box;
 			} else {
@@ -295,13 +315,12 @@ class Patroller extends SpecialPage {
 	 * Determine which of the two "revert reason" form fields to use;
 	 * the pre-defined reasons, or the nice custom text box
 	 *
-	 * @param $request WebRequest object to test
-	 * @return string
+	 * @access	private
+	 * @param	class	WebRequest object to test
+	 * @return	string	Revert reason
 	 */
 	private function revertReason( &$request ) {
 		$custom = $request->getText( 'wpPatrolRevertReason' );
-		return trim( $custom ) != ''
-				? $custom
-				: $request->getText( 'wpPatrolRevertReasonCommon' );
+		return trim( $custom ) != '' ? $custom : $request->getText( 'wpPatrolRevertReasonCommon' );
 	}
 }
