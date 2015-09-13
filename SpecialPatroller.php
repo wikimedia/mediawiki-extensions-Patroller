@@ -56,18 +56,18 @@ class Patroller extends SpecialPage {
 					# Mark the change patrolled
 					if ( !$wgUser->isBlocked( false ) ) {
 						RecentChange::markPatrolled( $rcid );
-						$wgOut->setSubtitle( wfMsgHtml( 'patrol-endorsed-ok' ) );
+						$wgOut->setSubtitle( wfMessages( 'patrol-endorsed-ok' )->escaped() );
 					} else {
-						$wgOut->setSubtitle( wfMsgHtml( 'patrol-endorsed-failed' ) );
+						$wgOut->setSubtitle( wgMessages( 'patrol-endorsed-failed' )->escaped() );
 					}
 				} elseif ( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
 					# Revert the change
 					$edit = $this->loadChange( $rcid );
 					$msg = $this->revert( $edit, $this->revertReason( $wgRequest ) ) ? 'ok' : 'failed';
-					$wgOut->setSubtitle( wfMsgHtml( 'patrol-reverted-' . $msg ) );
+					$wgOut->setSubtitle( wgMessage( 'patrol-reverted-' . $msg )->escaped() );
 				} elseif ( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
 					# Do nothing
-					$wgOut->setSubtitle( wfMsgHtml( 'patrol-skipped-ok' ) );
+					$wgOut->setSubtitle( wgMessage( 'patrol-skipped-ok' )->escaped() );
 				}
 			}
 		}
@@ -76,8 +76,8 @@ class Patroller extends SpecialPage {
 		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin =& $wgUser->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
-			$link = $skin->makeKnownLinkObj( $self, wfMsgHtml( 'patrol-resume' ) );
-			$wgOut->addHTML( wfMsgWikiHtml( 'patrol-stopped', $link ) );
+			$link = $skin->makeKnownLinkObj( $self, wfMessage( 'patrol-resume' )->escaped() );
+			$wgOut->addHTML( wfMessage( 'patrol-stopped', $link )->escaped() );
 			return;
 		}
 
@@ -98,7 +98,7 @@ class Patroller extends SpecialPage {
 			} else {
 				# Can't find a suitable edit
 				$haveEdit = true; # Don't keep going, there's nothing to find
-				$wgOut->addWikiText( wfMsg( 'patrol-nonefound' ) );
+				$wgOut->addWikiText( wfMessage( 'patrol-nonefound' )->text() );
 			}
 		}
 	}
@@ -140,17 +140,40 @@ class Patroller extends SpecialPage {
 	private function showControls( &$edit ) {
 		global $wgUser, $wgOut;
 		$self = SpecialPage::getTitleFor( 'Patrol' );
-		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= '<table>';
-		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-endorse' ), array( 'name' => 'wpPatrolEndorse' ) ) . '</td><td></td></tr>';
-		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-revert' ), array( 'name' => 'wpPatrolRevert' ) ) . '</td>';
-		$form .= '<td>' . Xml::label( wfMsg( 'patrol-revert-reason' ), 'reason' ) . '&#160;';
-		$form .= $this->revertReasonsDropdown() . ' / ' . Xml::input( 'wpPatrolRevertReason' ) . '</td></tr>';
-		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-skip' ), array( 'name' => 'wpPatrolSkip' ) ) . '</td></tr></table>';
-		$form .= '<tr><td>' . Xml::check( 'wpAnother', true ) . '</td><td>' . wfMsgHtml( 'patrol-another' ) . '</td></tr>';
+		$form = Html::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form .= Html::openElement( 'table' );
+		$form .= Html::openElement( 'tr' );
+		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
+		$form .= Html::submitButton( wfMessage( 'patrol-endorse' )->escaped(), array( 'name' => 'wpPatrolEndorse' ) );
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::openElement( 'td' ) . Html::closeElement( 'td' );
+		$form .= Html::closeElement( 'tr' );
+		$form .= Html::openElement( 'tr' );
+		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
+		$form .= Html::submitButton( wfMessage( 'patrol-revert' )->escaped(), array( 'name' => 'wpPatrolRevert' ) );
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::openElement( 'td' );
+		$form .= Html::label( wfMessage( 'patrol-revert-reason' )->escaped(), 'reason' ) . '&#160;';
+		$form .= $this->revertReasonsDropdown() . ' / ' . Html::input( 'wpPatrolRevertReason' );
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::closeElement( 'tr' );
+		$form .= Html::openElement( 'tr' );
+		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
+		$form .= Html::submitButton( wfMessage( 'patrol-skip' )->escaped(), array( 'name' => 'wpPatrolSkip' ) );
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::closeElement( 'tr' );
+		$form .= Html::openElement( 'tr' );
+		$form .= Html::openElement( 'td' );
+		$form .= Html::check( 'wpAnother', true );
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::openElement( 'td' );
+		$form .= wfMessage( 'patrol-another' )->escaped();
+		$form .= Html::closeElement( 'td' );
+		$form .= Html::closeElement( 'tr' );
+		$form .= Html::closeElement( 'table' );
 		$form .= Html::Hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
 		$form .= Html::Hidden( 'wpToken', $wgUser->editToken() );
-		$form .= '</form>';
+		$form .= Html::closeElement( 'form' );
 		$wgOut->addHTML( $form );
 	}
 
@@ -258,7 +281,7 @@ class Patroller extends SpecialPage {
 			$dbw->begin();
 			$title = $edit->getTitle();
 			# Prepare the comment
-			$comment = wfMsgForContent( 'patrol-reverting', $comment );
+			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
 			# Find the old revision
 			$old = Revision::newFromId( $edit->mAttribs['rc_last_oldid'] );
 			# Be certain we're not overwriting a more recent change
@@ -287,7 +310,7 @@ class Patroller extends SpecialPage {
 	 * @return	string	Reasons
 	 */
 	private function revertReasonsDropdown() {
-		$msg = wfMsgForContent( 'patrol-reasons' );
+		$msg = wgMessage( 'patrol-reasons' )->inContentLanguage()->text();
 		if ( $msg == '-' || $msg == '&lt;patrol-reasons&gt;' ) {
 			return '';
 		} else {
@@ -299,11 +322,11 @@ class Patroller extends SpecialPage {
 				}
 			}
 			if ( count( $reasons ) > 0 ) {
-				$box = Xml::openElement( 'select', array( 'name' => 'wpPatrolRevertReasonCommon' ) );
+				$box = Html::openElement( 'select', array( 'name' => 'wpPatrolRevertReasonCommon' ) );
 				foreach ( $reasons as $reason ) {
-					$box .= Xml::element( 'option', array( 'value' => $reason ), $reason );
+					$box .= Html::element( 'option', array( 'value' => $reason ), $reason );
 				}
-				$box .= Xml::closeElement( 'select' );
+				$box .= Html::closeElement( 'select' );
 				return $box;
 			} else {
 				return '';
