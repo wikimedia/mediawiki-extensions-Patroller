@@ -11,7 +11,7 @@
 			"아라"
 		]
 	},
-	"patrol-desc": "{{desc}}",
+	"patrol-desc": "{{desc|what=extension|name=Patroller|url=https://www.mediawiki.org/wiki/Extension:Patroller}}",
 	"patrol-revert": "{{Identical|Revert}}",
 	"patrol-revert-reason": "{{Identical|Reason}}",
 	"patrol-skip": "{{Identical|Skip}}",
