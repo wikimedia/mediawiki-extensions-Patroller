@@ -36,7 +36,7 @@ $dir = dirname( __FILE__ ) . '/';
 
 # Register hooks
 $wgAutoloadClasses['PatrollerHooks']			= $dir . 'Patroller.hooks.php';
-$wgAutoloadClasses['Patroller']					= $dir . 'SpecialPatroller.php';
+$wgAutoloadClasses['SpecialPatroller']					= $dir . 'SpecialPatroller.php';
 
 $wgHooks['LoadExtensionSchemaUpdates'][]		= 'PatrollerHooks::onLoadExtensionSchemaUpdates';
 $wgSpecialPages['Patrol']						= 'SpecialPatroller';
