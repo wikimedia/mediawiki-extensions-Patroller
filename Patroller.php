@@ -32,11 +32,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'licence-name'		=> 'GPL-2.0'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 # Register hooks
 $wgAutoloadClasses['PatrollerHooks']			= $dir . 'Patroller.hooks.php';
-$wgAutoloadClasses['SpecialPatroller']			= $dir . 'SpecialPatroller.php';
+$wgAutoloadClasses['Patroller']					= $dir . 'SpecialPatroller.php';
+
 $wgHooks['LoadExtensionSchemaUpdates'][]		= 'PatrollerHooks::onLoadExtensionSchemaUpdates';
 $wgSpecialPages['Patrol']						= 'SpecialPatroller';
 

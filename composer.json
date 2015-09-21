@@ -16,13 +16,11 @@
 	],
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "0.9",
-		"mediawiki/mediawiki-codesniffer": "0.3.0",
-		"phpunit/phpunit": "4.6.*"
+		"mediawiki/mediawiki-codesniffer": "0.3.0"
 	},
 	"scripts": {
 		"test": [
 			"parallel-lint . --exclude vendor",
-			"phpunit $PHPUNIT_ARGS",
 			"phpcs -p"
 		]
 	}

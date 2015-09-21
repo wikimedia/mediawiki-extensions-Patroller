@@ -10,7 +10,7 @@
  * @link: https://mediawiki.org/wiki/Extension:Patroller
  */
 
-class Patroller extends SpecialPage {
+class SpecialPatroller extends SpecialPage {
 	/**
 	 * Constructor
 	 *
@@ -72,7 +72,8 @@ class Patroller extends SpecialPage {
 			}
 		}
 
-		# If a token was passed, but the check box value was not, then the user wants to pause or stop patrolling
+		# If a token was passed, but the check box value was not, then the user
+		# wants to pause or stop patrolling
 		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin =& $wgUser->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
@@ -115,7 +116,11 @@ class Patroller extends SpecialPage {
 		$edit->counter = 1;
 		$edit->mAttribs['rc_patrolled'] = 1;
 		$list = ChangesList::newFromUser( $wgUser );
-		$wgOut->addHTML( $list->beginRecentChangesList() . $list->recentChangesLine( $edit ) . $list->endRecentChangesList() );
+		$wgOut->addHTML(
+			$list->beginRecentChangesList()
+			. $list->recentChangesLine( $edit )
+			. $list->endRecentChangesList()
+		);
 	}
 
 	/**
@@ -126,7 +131,11 @@ class Patroller extends SpecialPage {
 	 * @return	void
 	 */
 	private function showDiff( &$edit ) {
-		$diff = new DifferenceEngine( $edit->getTitle(), $edit->mAttribs['rc_last_oldid'], $edit->mAttribs['rc_this_oldid'] );
+		$diff = new DifferenceEngine(
+			$edit->getTitle(),
+			$edit->mAttribs['rc_last_oldid'],
+			$edit->mAttribs['rc_this_oldid']
+		);
 		$diff->showDiff( '', '' );
 	}
 
@@ -140,17 +149,25 @@ class Patroller extends SpecialPage {
 	private function showControls( &$edit ) {
 		global $wgUser, $wgOut;
 		$self = SpecialPage::getTitleFor( 'Patrol' );
-		$form = Html::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form = Html::openElement( 'form', array(
+			'method' => 'post', 'action' => $self->getLocalUrl() )
+		);
 		$form .= Html::openElement( 'table' );
 		$form .= Html::openElement( 'tr' );
 		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
-		$form .= Html::submitButton( wfMessage( 'patrol-endorse' )->escaped(), array( 'name' => 'wpPatrolEndorse' ) );
+		$form .= Html::submitButton(
+			wfMessage( 'patrol-endorse' )->escaped(),
+			array( 'name' => 'wpPatrolEndorse' )
+		);
 		$form .= Html::closeElement( 'td' );
 		$form .= Html::openElement( 'td' ) . Html::closeElement( 'td' );
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::openElement( 'tr' );
 		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
-		$form .= Html::submitButton( wfMessage( 'patrol-revert' )->escaped(), array( 'name' => 'wpPatrolRevert' ) );
+		$form .= Html::submitButton(
+			wfMessage( 'patrol-revert' )->escaped(),
+			array( 'name' => 'wpPatrolRevert' )
+		);
 		$form .= Html::closeElement( 'td' );
 		$form .= Html::openElement( 'td' );
 		$form .= Html::label( wfMessage( 'patrol-revert-reason' )->escaped(), 'reason' ) . '&#160;';
@@ -159,7 +176,10 @@ class Patroller extends SpecialPage {
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::openElement( 'tr' );
 		$form .= Html::openElement( 'td', array( 'align' => 'right' ) );
-		$form .= Html::submitButton( wfMessage( 'patrol-skip' )->escaped(), array( 'name' => 'wpPatrolSkip' ) );
+		$form .= Html::submitButton(
+			wfMessage( 'patrol-skip' )->escaped(),
+			array( 'name' => 'wpPatrolSkip' )
+		);
 		$form .= Html::closeElement( 'td' );
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::openElement( 'tr' );
@@ -226,7 +246,8 @@ class Patroller extends SpecialPage {
 	}
 
 	/**
-	 * Assign the patrolling of a particular change, so other users don't pull it up, duplicating effort
+	 * Assign the patrolling of a particular change, so other users don't pull
+	 * it up, duplicating effort
 	 *
 	 * @access	private
 	 * @param	string	RecentChange item to assign
@@ -263,7 +284,11 @@ class Patroller extends SpecialPage {
 	 */
 	private function pruneAssignments() {
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'patrollers', array( 'ptr_timestamp < ' . $dbw->timestamp( time() - 120 ) ), 'Patroller::pruneAssignments' );
+		$dbw->delete(
+			'patrollers',
+			array( 'ptr_timestamp < ' . $dbw->timestamp( time() - 120 ) ),
+			'Patroller::pruneAssignments'
+		);
 	}
 
 	/**
@@ -286,7 +311,12 @@ class Patroller extends SpecialPage {
 			$old = Revision::newFromId( $edit->mAttribs['rc_last_oldid'] );
 			# Be certain we're not overwriting a more recent change
 			# If we would, ignore it, and silently consider this change patrolled
-			$latest = (int)$dbw->selectField( 'page', 'page_latest', array( 'page_id' => $title->getArticleID() ), __METHOD__ );
+			$latest = (int)$dbw->selectField(
+				'page',
+				'page_latest',
+				array( 'page_id' => $title->getArticleID() ),
+				__METHOD__
+			);
 			if ( $edit->mAttribs['rc_this_oldid'] == $latest ) {
 				# Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
