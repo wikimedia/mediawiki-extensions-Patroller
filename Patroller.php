@@ -43,7 +43,6 @@ $wgSpecialPages['Patrol']						= 'SpecialPatroller';
 
 # Register messages
 $wgMessagesDir['Patroller']						= $dir . 'i18n';
-$wgExtensionMessagesFiles['Patroller']			= $dir . 'Patroller.i18n.php';
 $wgExtensionMessagesFiles['PatrollerAlias']		= $dir . 'Patroller.alias.php';
 
 # Register rights
