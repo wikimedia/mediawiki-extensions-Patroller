@@ -51,7 +51,8 @@ class SpecialPatroller extends SpecialPage {
 
 		# See if something needs to be done
 		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'wpToken' ) ) ) {
-			if ( $rcid = $wgRequest->getIntOrNull( 'wpRcId' ) ) {
+			$rcid = $wgRequest->getIntOrNull( 'wpRcId' );
+			if ( $rcid ) {
 				if ( $wgRequest->getCheck( 'wpPatrolEndorse' ) ) {
 					# Mark the change patrolled
 					if ( !$wgUser->isBlocked( false ) ) {
