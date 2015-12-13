@@ -193,7 +193,7 @@ class SpecialPatroller extends SpecialPage {
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::closeElement( 'table' );
 		$form .= Html::Hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
-		$form .= Html::Hidden( 'wpToken', $wgUser->editToken() );
+		$form .= Html::Hidden( 'wpToken', $wgUser->getEditToken() );
 		$form .= Html::closeElement( 'form' );
 		$wgOut->addHTML( $form );
 	}
