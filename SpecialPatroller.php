@@ -76,7 +76,7 @@ class SpecialPatroller extends SpecialPage {
 		# If a token was passed, but the check box value was not, then the user
 		# wants to pause or stop patrolling
 		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
-			$skin =& $wgUser->getSkin();
+			$skin = $this->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
 			$link = $skin->makeKnownLinkObj( $self, wfMessage( 'patrol-resume' )->escaped() );
 			$wgOut->addHTML( wfMessage( 'patrol-stopped', $link )->escaped() );
