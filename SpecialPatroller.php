@@ -76,7 +76,13 @@ class SpecialPatroller extends SpecialPage {
 		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin = $this->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
-			$link = $skin->makeKnownLinkObj( $self, wfMessage( 'patrol-resume' )->escaped() );
+			$link = Linker::link(
+				$self,
+				wfMessage( 'patrol-resume' )->escaped(),
+				array(),
+				array(),
+				array( 'known' )
+			);
 			$wgOut->addHTML( wfMessage( 'patrol-stopped', $link )->escaped() );
 			return;
 		}
