@@ -34,8 +34,7 @@ class SpecialPatroller extends SpecialPage {
 
 		# Check permissions
 		if ( !$wgUser->isAllowed( 'patroller' ) ) {
-			$wgOut->permissionRequired( 'patroller' );
-			return;
+			throw new PermissionsError( 'patroller' );
 		}
 
 		# Keep out blocked users
