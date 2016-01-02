@@ -39,8 +39,7 @@ class SpecialPatroller extends SpecialPage {
 
 		# Keep out blocked users
 		if ( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
-			return;
+			throw new UserBlockedError( $wgUser->getBlock() );
 		}
 
 		# Prune old assignments if needed
