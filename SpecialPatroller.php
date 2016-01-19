@@ -20,6 +20,10 @@ class SpecialPatroller extends SpecialPage {
 		parent::__construct( 'Patrol', 'patroller' );
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	/**
 	 * Execution
 	 *
