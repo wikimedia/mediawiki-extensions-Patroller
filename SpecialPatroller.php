@@ -312,7 +312,6 @@ class SpecialPatroller extends SpecialPage {
 		global $wgUser;
 		if ( !$wgUser->isBlocked( false ) ) { # Check block against master
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->begin( __METHOD__ );
 			$title = $edit->getTitle();
 			# Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
@@ -332,7 +331,6 @@ class SpecialPatroller extends SpecialPage {
 				$article = new Article( $title );
 				$article->doEdit( $old->getText(), $comment, EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC );
 			}
-			$dbw->commit( __METHOD__ );
 			# Mark the edit patrolled so it doesn't bother us again
 			RecentChange::markPatrolled( $edit->mAttribs['rc_id'] );
 			return true;
