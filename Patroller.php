@@ -27,23 +27,23 @@ $wgExtensionCredits['specialpage'][] = [
 	'name'				=> 'Patroller',
 	'descriptionmsg'	=> 'patrol-desc',
 	'author'			=> 'Rob Church, Kris Blair (Cblair91)',
-	'version'			=> '2.0',
+	'version'			=> '2.0.1',
 	'url'				=> 'https://www.mediawiki.org/wiki/Extension:Patroller',
 	'licence-name'		=> 'GPL-2.0'
 ];
 
-# Register hooks
+// Register hooks
 $wgAutoloadClasses['PatrollerHooks']			= __DIR__ . '/Patroller.hooks.php';
 $wgAutoloadClasses['SpecialPatroller']					= __DIR__ . '/SpecialPatroller.php';
 
 $wgHooks['LoadExtensionSchemaUpdates'][]		= 'PatrollerHooks::onLoadExtensionSchemaUpdates';
 $wgSpecialPages['Patrol']						= 'SpecialPatroller';
 
-# Register messages
+// Register messages
 $wgMessagesDir['Patroller']						= __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['PatrollerAlias']		= __DIR__ . '/Patroller.alias.php';
 
-# Register rights
+// Register rights
 $wgAvailableRights[]							= 'patroller';
 $wgGroupPermissions['sysop']['patroller']		= true;
 $wgGroupPermissions['patroller']['patroller']	= true;

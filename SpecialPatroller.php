@@ -36,27 +36,27 @@ class SpecialPatroller extends SpecialPage {
 
 		$this->setHeaders();
 
-		# Check permissions
+		// Check permissions
 		if ( !$wgUser->isAllowed( 'patroller' ) ) {
 			throw new PermissionsError( 'patroller' );
 		}
 
-		# Keep out blocked users
+		// Keep out blocked users
 		if ( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $wgUser->getBlock() );
 		}
 
-		# Prune old assignments if needed
+		// Prune old assignments if needed
 		if ( 0 == mt_rand( 0, 499 ) ) {
 			$this->pruneAssignments();
 		}
 
-		# See if something needs to be done
+		// See if something needs to be done
 		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'wpToken' ) ) ) {
 			$rcid = $wgRequest->getIntOrNull( 'wpRcId' );
 			if ( $rcid ) {
 				if ( $wgRequest->getCheck( 'wpPatrolEndorse' ) ) {
-					# Mark the change patrolled
+					// Mark the change patrolled
 					if ( !$wgUser->isBlocked( false ) ) {
 						RecentChange::markPatrolled( $rcid );
 						$wgOut->setSubtitle( wfMessages( 'patrol-endorsed-ok' )->escaped() );
@@ -64,19 +64,19 @@ class SpecialPatroller extends SpecialPage {
 						$wgOut->setSubtitle( wgMessages( 'patrol-endorsed-failed' )->escaped() );
 					}
 				} elseif ( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
-					# Revert the change
+					// Revert the change
 					$edit = $this->loadChange( $rcid );
 					$msg = $this->revert( $edit, $this->revertReason( $wgRequest ) ) ? 'ok' : 'failed';
 					$wgOut->setSubtitle( wgMessage( 'patrol-reverted-' . $msg )->escaped() );
 				} elseif ( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
-					# Do nothing
+					// Do nothing
 					$wgOut->setSubtitle( wgMessage( 'patrol-skipped-ok' )->escaped() );
 				}
 			}
 		}
 
-		# If a token was passed, but the check box value was not, then the user
-		# wants to pause or stop patrolling
+		// If a token was passed, but the check box value was not, then the user
+		// wants to pause or stop patrolling
 		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin = $this->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
@@ -91,12 +91,12 @@ class SpecialPatroller extends SpecialPage {
 			return;
 		}
 
-		# Pop an edit off recentchanges
+		// Pop an edit off recentchanges
 		$haveEdit = false;
 		while ( !$haveEdit ) {
 			$edit = $this->fetchChange( $wgUser );
 			if ( $edit ) {
-				# Attempt to assign it
+				// Attempt to assign it
 				if ( $this->assignChange( $edit ) ) {
 					$haveEdit = true;
 					$this->showDiffDetails( $edit );
@@ -106,8 +106,8 @@ class SpecialPatroller extends SpecialPage {
 					$this->showControls( $edit );
 				}
 			} else {
-				# Can't find a suitable edit
-				$haveEdit = true; # Don't keep going, there's nothing to find
+				// Can't find a suitable edit
+				$haveEdit = true; // Don't keep going, there's nothing to find
 				$wgOut->addWikiText( wfMessage( 'patrol-nonefound' )->text() );
 			}
 		}
@@ -121,10 +121,10 @@ class SpecialPatroller extends SpecialPage {
 	 * @return	void
 	 */
 	private function showDiffDetails( &$edit ) {
-		global $wgUser, $wgOut;
+		global $wgOut;
 		$edit->counter = 1;
 		$edit->mAttribs['rc_patrolled'] = 1;
-		$list = ChangesList::newFromUser( $wgUser );
+		$list = ChangesList::newFromContext( RequestContext::GetMain() );
 		$wgOut->addHTML(
 			$list->beginRecentChangesList()
 			. $list->recentChangesLine( $edit )
@@ -310,15 +310,15 @@ class SpecialPatroller extends SpecialPage {
 	 */
 	private function revert( &$edit, $comment = '' ) {
 		global $wgUser;
-		if ( !$wgUser->isBlocked( false ) ) { # Check block against master
+		if ( !$wgUser->isBlocked( false ) ) { // Check block against master
 			$dbw = wfGetDB( DB_MASTER );
 			$title = $edit->getTitle();
-			# Prepare the comment
+			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
-			# Find the old revision
+			// Find the old revision
 			$old = Revision::newFromId( $edit->mAttribs['rc_last_oldid'] );
-			# Be certain we're not overwriting a more recent change
-			# If we would, ignore it, and silently consider this change patrolled
+			// Be certain we're not overwriting a more recent change
+			// If we would, ignore it, and silently consider this change patrolled
 			$latest = (int)$dbw->selectField(
 				'page',
 				'page_latest',
@@ -326,12 +326,12 @@ class SpecialPatroller extends SpecialPage {
 				__METHOD__
 			);
 			if ( $edit->mAttribs['rc_this_oldid'] == $latest ) {
-				# Revert the edit; keep the reversion itself out of recent changes
+				// Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
 				$article = new Article( $title );
 				$article->doEdit( $old->getText(), $comment, EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC );
 			}
-			# Mark the edit patrolled so it doesn't bother us again
+			// Mark the edit patrolled so it doesn't bother us again
 			RecentChange::markPatrolled( $edit->mAttribs['rc_id'] );
 			return true;
 		} else {
