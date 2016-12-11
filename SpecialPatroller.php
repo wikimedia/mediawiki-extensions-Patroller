@@ -328,8 +328,12 @@ class SpecialPatroller extends SpecialPage {
 			if ( $edit->mAttribs['rc_this_oldid'] == $latest ) {
 				// Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
-				$article = new Article( $title );
-				$article->doEdit( $old->getText(), $comment, EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC );
+				$page = WikiPage::factory( $title );
+				$page->doEditContent(
+					$old->getContent(),
+					$comment,
+					EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
+				);
 			}
 			// Mark the edit patrolled so it doesn't bother us again
 			RecentChange::markPatrolled( $edit->mAttribs['rc_id'] );
