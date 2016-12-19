@@ -6,7 +6,7 @@
 		"Kris Blair (Cblair91)"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Patroller",
-	"descriptionmsg": "patroller-desc",
+	"descriptionmsg": "patrol-desc",
 	"license-name": "GPL-2.0",
 	"type": "special",
 	"GroupPermissions": {
