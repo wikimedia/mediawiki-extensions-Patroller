@@ -1,9 +1,9 @@
 {
 	"name": "Patroller",
-	"version": "2.0.1",
+	"version": "2.1",
 	"author": [
 		"Rob Church",
-		"Kris Blair (Cblair91)"
+		"Kris Blair (Developaws)"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Patroller",
 	"descriptionmsg": "patrol-desc",
