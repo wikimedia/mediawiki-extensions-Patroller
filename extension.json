@@ -11,7 +11,7 @@
 	"type": "special",
 	"GroupPermissions": {
 		"sysop": {
-		 	"patroller": true
+			"patroller": true
 		},
 		"patroller": {
 			"patroller": true
