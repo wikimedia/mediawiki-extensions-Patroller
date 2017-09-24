@@ -222,7 +222,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return	boolean	RecentChange
 	 */
 	private function fetchChange( &$user ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$uid = $user->getId();
 		extract( $dbr->tableNames( 'recentchanges', 'patrollers', 'page' ) );
 		$res = $dbr->select(
@@ -266,7 +266,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return	boolean	RecentChange
 	 */
 	private function loadChange( $rcid ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select(
 			'recentchanges',
 			'*',
