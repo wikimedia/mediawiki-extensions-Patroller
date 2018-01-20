@@ -58,18 +58,18 @@ class SpecialPatroller extends SpecialPage {
 					// Mark the change patrolled
 					if ( !$wgUser->isBlocked( false ) ) {
 						RecentChange::markPatrolled( $rcid );
-						$wgOut->setSubtitle( wfMessages( 'patrol-endorsed-ok' )->escaped() );
+						$wgOut->setSubtitle( wfMessage( 'patrol-endorsed-ok' )->escaped() );
 					} else {
-						$wgOut->setSubtitle( wgMessages( 'patrol-endorsed-failed' )->escaped() );
+						$wgOut->setSubtitle( wfMessage( 'patrol-endorsed-failed' )->escaped() );
 					}
 				} elseif ( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
 					// Revert the change
 					$edit = $this->loadChange( $rcid );
 					$msg = $this->revert( $edit, $this->revertReason( $wgRequest ) ) ? 'ok' : 'failed';
-					$wgOut->setSubtitle( wgMessage( 'patrol-reverted-' . $msg )->escaped() );
+					$wgOut->setSubtitle( wfMessage( 'patrol-reverted-' . $msg )->escaped() );
 				} elseif ( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
 					// Do nothing
-					$wgOut->setSubtitle( wgMessage( 'patrol-skipped-ok' )->escaped() );
+					$wgOut->setSubtitle( wfMessage( 'patrol-skipped-ok' )->escaped() );
 				}
 			}
 		}
@@ -378,7 +378,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return string Reasons
 	 */
 	private function revertReasonsDropdown() {
-		$msg = wgMessage( 'patrol-reasons' )->inContentLanguage()->text();
+		$msg = wfMessage( 'patrol-reasons' )->inContentLanguage()->text();
 		if ( $msg == '-' || $msg == '&lt;patrol-reasons&gt;' ) {
 			return '';
 		}
