@@ -120,7 +120,9 @@ class SpecialPatroller extends SpecialPage {
 	private function showDiffDetails( &$edit ) {
 		global $wgOut;
 		$edit->counter = 1;
-		$edit->mAttribs['rc_patrolled'] = 1;
+		$editAttribs = $edit->getAttributes();
+		$editAttribs['rc_patrolled'] = 1;
+		$edit->setAttribs( $editAttribs );
 		$list = ChangesList::newFromContext( RequestContext::GetMain() );
 		$wgOut->addHTML(
 			$list->beginRecentChangesList() .
@@ -137,8 +139,8 @@ class SpecialPatroller extends SpecialPage {
 	private function showDiff( &$edit ) {
 		$diff = new DifferenceEngine(
 			$edit->getTitle(),
-			$edit->mAttribs['rc_last_oldid'],
-			$edit->mAttribs['rc_this_oldid']
+			$edit->getAttribute( 'rc_last_oldid' ),
+			$edit->getAttribute( 'rc_this_oldid' )
 		);
 		$diff->showDiff( '', '' );
 	}
@@ -197,7 +199,7 @@ class SpecialPatroller extends SpecialPage {
 		$form .= Html::closeElement( 'td' );
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::closeElement( 'table' );
-		$form .= Html::Hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
+		$form .= Html::Hidden( 'wpRcId', $edit->getAttribute( 'rc_id' ) );
 		$form .= Html::Hidden( 'wpToken', $wgUser->getEditToken() );
 		$form .= Html::closeElement( 'form' );
 		$wgOut->addHTML( $form );
@@ -285,7 +287,7 @@ class SpecialPatroller extends SpecialPage {
 		$res = $dbw->insert(
 			'patrollers',
 			[
-				'ptr_change'	=> $edit->mAttribs['rc_id'],
+				'ptr_change'	=> $edit->getAttribute( 'rc_id' ),
 				'ptr_timestamp'	=> $dbw->timestamp()
 			],
 			__METHOD__,
@@ -343,7 +345,7 @@ class SpecialPatroller extends SpecialPage {
 			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
 			// Find the old revision
-			$old = Revision::newFromId( $edit->mAttribs['rc_last_oldid'] );
+			$old = Revision::newFromId( $edit->getAttribute( 'rc_last_oldid' ) );
 			// Be certain we're not overwriting a more recent change
 			// If we would, ignore it, and silently consider this change patrolled
 			$latest = (int)$dbw->selectField(
@@ -354,7 +356,7 @@ class SpecialPatroller extends SpecialPage {
 				],
 				__METHOD__
 			);
-			if ( $edit->mAttribs['rc_this_oldid'] == $latest ) {
+			if ( $edit->getAttribute( 'rc_this_oldid' ) == $latest ) {
 				// Revert the edit; keep the reversion itself out of recent changes
 				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
 				$page = WikiPage::factory( $title );
@@ -365,7 +367,7 @@ class SpecialPatroller extends SpecialPage {
 				);
 			}
 			// Mark the edit patrolled so it doesn't bother us again
-			RecentChange::markPatrolled( $edit->mAttribs['rc_id'] );
+			RecentChange::markPatrolled( $edit->getAttribute( 'rc_id' ) );
 			return true;
 		}
 		return false;
