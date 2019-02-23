@@ -31,18 +31,19 @@ class SpecialPatroller extends SpecialPage {
 	 * @return void
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgRequest, $wgOut;
-
+		$out = $this->getOutput();
+		$user = $this->getUser();
+		$request = $this->getRequest();
 		$this->setHeaders();
 
 		// Check permissions
-		if ( !$wgUser->isAllowed( 'patroller' ) ) {
+		if ( !$user->isAllowed( 'patroller' ) ) {
 			throw new PermissionsError( 'patroller' );
 		}
 
 		// Keep out blocked users
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $wgUser->getBlock() );
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->getBlock() );
 		}
 
 		// Prune old assignments if needed
@@ -51,32 +52,32 @@ class SpecialPatroller extends SpecialPage {
 		}
 
 		// See if something needs to be done
-		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getText( 'wpToken' ) ) ) {
-			$rcid = $wgRequest->getIntOrNull( 'wpRcId' );
+		if ( $request->wasPosted() && $user->matchEditToken( $request->getText( 'wpToken' ) ) ) {
+			$rcid = $request->getIntOrNull( 'wpRcId' );
 			if ( $rcid ) {
-				if ( $wgRequest->getCheck( 'wpPatrolEndorse' ) ) {
+				if ( $request->getCheck( 'wpPatrolEndorse' ) ) {
 					// Mark the change patrolled
-					if ( !$wgUser->isBlocked( false ) ) {
+					if ( !$user->isBlocked( false ) ) {
 						RecentChange::markPatrolled( $rcid );
-						$wgOut->setSubtitle( wfMessage( 'patrol-endorsed-ok' )->escaped() );
+						$out->setSubtitle( wfMessage( 'patrol-endorsed-ok' )->escaped() );
 					} else {
-						$wgOut->setSubtitle( wfMessage( 'patrol-endorsed-failed' )->escaped() );
+						$out->setSubtitle( wfMessage( 'patrol-endorsed-failed' )->escaped() );
 					}
-				} elseif ( $wgRequest->getCheck( 'wpPatrolRevert' ) ) {
+				} elseif ( $request->getCheck( 'wpPatrolRevert' ) ) {
 					// Revert the change
 					$edit = $this->loadChange( $rcid );
-					$msg = $this->revert( $edit, $this->revertReason( $wgRequest ) ) ? 'ok' : 'failed';
-					$wgOut->setSubtitle( wfMessage( 'patrol-reverted-' . $msg )->escaped() );
-				} elseif ( $wgRequest->getCheck( 'wpPatrolSkip' ) ) {
+					$msg = $this->revert( $edit, $this->revertReason( $request ) ) ? 'ok' : 'failed';
+					$out->setSubtitle( wfMessage( 'patrol-reverted-' . $msg )->escaped() );
+				} elseif ( $request->getCheck( 'wpPatrolSkip' ) ) {
 					// Do nothing
-					$wgOut->setSubtitle( wfMessage( 'patrol-skipped-ok' )->escaped() );
+					$out->setSubtitle( wfMessage( 'patrol-skipped-ok' )->escaped() );
 				}
 			}
 		}
 
 		// If a token was passed, but the check box value was not, then the user
 		// wants to pause or stop patrolling
-		if ( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
+		if ( $request->getCheck( 'wpToken' ) && !$request->getCheck( 'wpAnother' ) ) {
 			$skin = $this->getSkin();
 			$self = SpecialPage::getTitleFor( 'Patrol' );
 			$link = Linker::link(
@@ -86,28 +87,28 @@ class SpecialPatroller extends SpecialPage {
 				[],
 				[ 'known' ]
 			);
-			$wgOut->addHTML( wfMessage( 'patrol-stopped', $link )->escaped() );
+			$out->addHTML( wfMessage( 'patrol-stopped', $link )->escaped() );
 			return;
 		}
 
 		// Pop an edit off recentchanges
 		$haveEdit = false;
 		while ( !$haveEdit ) {
-			$edit = $this->fetchChange( $wgUser );
+			$edit = $this->fetchChange( $user );
 			if ( $edit ) {
 				// Attempt to assign it
 				if ( $this->assignChange( $edit ) ) {
 					$haveEdit = true;
 					$this->showDiffDetails( $edit );
-					$wgOut->addHTML( '<br><hr>' );
+					$out->addHTML( '<br><hr>' );
 					$this->showDiff( $edit );
-					$wgOut->addHTML( '<br><hr>' );
+					$out->addHTML( '<br><hr>' );
 					$this->showControls( $edit );
 				}
 			} else {
 				// Can't find a suitable edit
 				$haveEdit = true; // Don't keep going, there's nothing to find
-				$wgOut->addWikiText( wfMessage( 'patrol-nonefound' )->text() );
+				$out->addWikiText( wfMessage( 'patrol-nonefound' )->text() );
 			}
 		}
 	}
@@ -118,13 +119,13 @@ class SpecialPatroller extends SpecialPage {
 	 * @param RecentChange &$edit Diff. to show the listing for
 	 */
 	private function showDiffDetails( &$edit ) {
-		global $wgOut;
+		$out = $this->getOutput();
 		$edit->counter = 1;
 		$editAttribs = $edit->getAttributes();
 		$editAttribs['rc_patrolled'] = 1;
 		$edit->setAttribs( $editAttribs );
 		$list = ChangesList::newFromContext( RequestContext::GetMain() );
-		$wgOut->addHTML(
+		$out->addHTML(
 			$list->beginRecentChangesList() .
 			$list->recentChangesLine( $edit ) .
 			$list->endRecentChangesList()
@@ -151,7 +152,8 @@ class SpecialPatroller extends SpecialPage {
 	 * @param RecentChange &$edit RecentChange being dealt with
 	 */
 	private function showControls( &$edit ) {
-		global $wgUser, $wgOut;
+		$user = $this->getUser();
+		$out = $this->getOutput();
 		$self = SpecialPage::getTitleFor( 'Patrol' );
 		$form = Html::openElement( 'form', [
 			'method' => 'post',
@@ -200,9 +202,9 @@ class SpecialPatroller extends SpecialPage {
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::closeElement( 'table' );
 		$form .= Html::Hidden( 'wpRcId', $edit->getAttribute( 'rc_id' ) );
-		$form .= Html::Hidden( 'wpToken', $wgUser->getEditToken() );
+		$form .= Html::Hidden( 'wpToken', $user->getEditToken() );
 		$form .= Html::closeElement( 'form' );
-		$wgOut->addHTML( $form );
+		$out->addHTML( $form );
 	}
 
 	/**
@@ -338,8 +340,8 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool Change was reverted
 	 */
 	private function revert( &$edit, $comment = '' ) {
-		global $wgUser;
-		if ( !$wgUser->isBlocked( false ) ) { // Check block against master
+		$user = $this->getUser();
+		if ( !$user->isBlocked( false ) ) { // Check block against master
 			$dbw = wfGetDB( DB_MASTER );
 			$title = $edit->getTitle();
 			// Prepare the comment
