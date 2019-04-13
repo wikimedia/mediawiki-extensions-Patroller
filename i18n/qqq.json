@@ -32,6 +32,7 @@
 	"group-patroller": "Group name for patroller users.\n{{doc-group|patroller}}",
 	"group-patroller-member": "Name for a patroller user.\n{{doc-group|patroller|member}}",
 	"grouppage-patroller": "Group page for patroller group.\n{{doc-group|patroller|page}}",
+	"action-patroller": "Permission description for patroller right.\n{{doc-action|patroller}}",
 	"right-patroller": "Permission description for patroller right.\n{{doc-right|patroller}}",
 	"group-patroller.css": "Default comment for patroller-only CSS.\n{{doc-group|patroller}}",
 	"group-patroller.js": "Default comment for patroller-only JS.\n{{doc-group|patroller}}"
