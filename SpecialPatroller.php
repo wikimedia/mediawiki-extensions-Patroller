@@ -108,7 +108,7 @@ class SpecialPatroller extends SpecialPage {
 			} else {
 				// Can't find a suitable edit
 				$haveEdit = true; // Don't keep going, there's nothing to find
-				$out->addWikiText( wfMessage( 'patrol-nonefound' )->text() );
+				$out->addWikiTextAsInterface( wfMessage( 'patrol-nonefound' )->text() );
 			}
 		}
 	}
