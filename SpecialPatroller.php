@@ -236,7 +236,7 @@ class SpecialPatroller extends SpecialPage {
 			],
 			__METHOD__,
 			[
-				'LIMIT'	=> '0,1'
+				'LIMIT'	=> 1
 			],
 			[
 				$patrollers => [
