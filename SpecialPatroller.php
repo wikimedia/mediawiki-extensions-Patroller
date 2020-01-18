@@ -58,7 +58,10 @@ class SpecialPatroller extends SpecialPage {
 				if ( $request->getCheck( 'wpPatrolEndorse' ) ) {
 					// Mark the change patrolled
 					if ( !$user->isBlocked( false ) ) {
-						RecentChange::markPatrolled( $rcid );
+						$rc = RecentChange::newFromId( $rcid );
+						if ( $rc !== null ) {
+							$rc->doMarkPatrolled( $user );
+						}
 						$out->setSubtitle( wfMessage( 'patrol-endorsed-ok' )->escaped() );
 					} else {
 						$out->setSubtitle( wfMessage( 'patrol-endorsed-failed' )->escaped() );
@@ -369,7 +372,9 @@ class SpecialPatroller extends SpecialPage {
 				);
 			}
 			// Mark the edit patrolled so it doesn't bother us again
-			RecentChange::markPatrolled( $edit->getAttribute( 'rc_id' ) );
+			if ( $edit !== null ) {
+				$edit->doMarkPatrolled( $user );
+			}
 			return true;
 		}
 		return false;
