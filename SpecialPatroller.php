@@ -10,6 +10,9 @@
  * @link: https://mediawiki.org/wiki/Extension:Patroller
  */
 
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\SlotRecord;
+
 class SpecialPatroller extends SpecialPage {
 	/**
 	 * Constructor
@@ -349,8 +352,6 @@ class SpecialPatroller extends SpecialPage {
 			$title = $edit->getTitle();
 			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
-			// Find the old revision
-			$old = Revision::newFromId( $edit->getAttribute( 'rc_last_oldid' ) );
 			// Be certain we're not overwriting a more recent change
 			// If we would, ignore it, and silently consider this change patrolled
 			$latest = (int)$dbw->selectField(
@@ -362,11 +363,22 @@ class SpecialPatroller extends SpecialPage {
 				__METHOD__
 			);
 			if ( $edit->getAttribute( 'rc_this_oldid' ) == $latest ) {
+				// Find the old revision
+				$oldRevisionRecord = MediaWikiServices::getInstance()
+					->getRevisionLookup()
+					->getRevisionById( $edit->getAttribute( 'rc_last_oldid' ) );
+
 				// Revert the edit; keep the reversion itself out of recent changes
-				wfDebugLog( 'patroller', 'Reverting "' . $title->getPrefixedText() . '" to r' . $old->getId() );
+				wfDebugLog(
+					'patroller',
+					'Reverting "' .
+						$title->getPrefixedText() .
+						'" to r' .
+						$oldRevisionRecord->getId()
+				);
 				$page = WikiPage::factory( $title );
 				$page->doEditContent(
-					$old->getContent(),
+					$oldRevisionRecord->getContent( SlotRecord::MAIN ),
 					$comment,
 					EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
 				);
