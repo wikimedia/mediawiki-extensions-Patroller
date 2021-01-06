@@ -226,9 +226,8 @@ class SpecialPatroller extends SpecialPage {
 	private function fetchChange( &$user ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		$uid = $user->getId();
-		extract( $dbr->tableNames( 'recentchanges', 'patrollers', 'page' ) );
 		$res = $dbr->select(
-			[ $page, $recentchanges ],
+			[ 'page', 'recentchanges' ],
 			'*',
 			[
 				'ptr_timestamp IS NULL',
@@ -245,7 +244,7 @@ class SpecialPatroller extends SpecialPage {
 				'LIMIT'	=> 1
 			],
 			[
-				$patrollers => [
+				'patrollers' => [
 					'LEFT JOIN',
 					[
 						'rc_id = ptr_change'
