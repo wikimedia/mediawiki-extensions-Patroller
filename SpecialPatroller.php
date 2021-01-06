@@ -50,7 +50,7 @@ class SpecialPatroller extends SpecialPage {
 		}
 
 		// Prune old assignments if needed
-		if ( 0 == mt_rand( 0, 499 ) ) {
+		if ( mt_rand( 0, 499 ) == 0 ) {
 			$this->pruneAssignments();
 		}
 
