@@ -113,7 +113,8 @@ class SpecialPatroller extends SpecialPage {
 				}
 			} else {
 				// Can't find a suitable edit
-				$haveEdit = true; // Don't keep going, there's nothing to find
+				// Don't keep going, there's nothing to find
+				$haveEdit = true;
 				$out->addWikiTextAsInterface( wfMessage( 'patrol-nonefound' )->text() );
 			}
 		}
@@ -346,7 +347,8 @@ class SpecialPatroller extends SpecialPage {
 	 */
 	private function revert( &$edit, $comment = '' ) {
 		$user = $this->getUser();
-		if ( !$user->isBlocked( false ) ) { // Check block against master
+		if ( !$user->isBlocked( false ) ) {
+			// Check block against master
 			$dbw = wfGetDB( DB_MASTER );
 			$title = $edit->getTitle();
 			// Prepare the comment

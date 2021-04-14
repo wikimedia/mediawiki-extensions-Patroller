@@ -32,8 +32,8 @@
 		"PatrollerAlias": "Patroller.alias.php"
 	},
 	"AutoloadClasses": {
-		"PatrollerHooks": "Patroller.hooks.php",
-		"SpecialPatroller": "SpecialPatroller.php"
+		"PatrollerHooks": "includes/PatrollerHooks.php",
+		"SpecialPatroller": "includes/specials/SpecialPatroller.php"
 	},
 	"Hooks": {
 		"LoadExtensionSchemaUpdates": [

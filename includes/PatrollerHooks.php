@@ -17,6 +17,6 @@ class PatrollerHooks {
 	 * @param DatabaseUpdater $updater The updater
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
-		$updater->addExtensionTable( 'patrollers', __DIR__ . '/sql/add-patrollers.sql' );
+		$updater->addExtensionTable( 'patrollers', __DIR__ . '/../sql/add-patrollers.sql' );
 	}
 }
