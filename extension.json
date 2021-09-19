@@ -10,7 +10,7 @@
 	"license-name": "GPL-2.0-only",
 	"type": "special",
 	"requires": {
-		"MediaWiki": ">= 1.32.0"
+		"MediaWiki": ">= 1.35.3"
 	},
 	"GroupPermissions": {
 		"sysop": {

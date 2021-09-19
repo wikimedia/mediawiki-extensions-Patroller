@@ -291,7 +291,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool If rows were changed
 	 */
 	private function assignChange( &$edit ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$res = $dbw->insert(
 			'patrollers',
 			[
@@ -312,7 +312,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @todo Use it or lose it
 	 */
 	private function unassignChange( $rcid ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$dbw->delete(
 			'patrollers',
 			[
@@ -328,7 +328,7 @@ class SpecialPatroller extends SpecialPage {
 	 * keep the table size down as regards old assignments
 	 */
 	private function pruneAssignments() {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 		$dbw->delete(
 			'patrollers',
 			[
@@ -349,7 +349,7 @@ class SpecialPatroller extends SpecialPage {
 		$user = $this->getUser();
 		if ( !$user->isBlocked( false ) ) {
 			// Check block against master
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_PRIMARY );
 			$title = $edit->getTitle();
 			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
