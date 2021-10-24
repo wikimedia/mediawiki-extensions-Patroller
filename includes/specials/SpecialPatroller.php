@@ -226,16 +226,16 @@ class SpecialPatroller extends SpecialPage {
 	 */
 	private function fetchChange( &$user ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$uid = $user->getId();
+		$aid = $user->getActorId();
 		$res = $dbr->select(
-			[ 'page', 'recentchanges' ],
+			[ 'page', 'recentchanges', 'patrollers' ],
 			'*',
 			[
 				'ptr_timestamp IS NULL',
 				'rc_namespace = page_namespace',
 				'rc_title = page_title',
 				'rc_this_oldid = page_latest',
-				'rc_user != ' . $uid,
+				'rc_actor != ' . $aid,
 				'rc_bot'		=> '0',
 				'rc_patrolled'	=> '0',
 				'rc_type'		=> '0'
