@@ -45,7 +45,7 @@ class SpecialPatroller extends SpecialPage {
 		}
 
 		// Keep out blocked users
-		if ( $user->isBlocked() ) {
+		if ( $user->getBlock() ) {
 			throw new UserBlockedError( $user->getBlock() );
 		}
 
@@ -60,7 +60,7 @@ class SpecialPatroller extends SpecialPage {
 			if ( $rcid ) {
 				if ( $request->getCheck( 'wpPatrolEndorse' ) ) {
 					// Mark the change patrolled
-					if ( !$user->isBlocked( false ) ) {
+					if ( !$user->getBlock( false ) ) {
 						$rc = RecentChange::newFromId( $rcid );
 						if ( $rc !== null ) {
 							$rc->doMarkPatrolled( $user );
@@ -347,7 +347,7 @@ class SpecialPatroller extends SpecialPage {
 	 */
 	private function revert( &$edit, $comment = '' ) {
 		$user = $this->getUser();
-		if ( !$user->isBlocked( false ) ) {
+		if ( !$user->getBlock( false ) ) {
 			// Check block against master
 			$dbw = wfGetDB( DB_PRIMARY );
 			$title = $edit->getTitle();
