@@ -268,7 +268,7 @@ class SpecialPatroller extends SpecialPage {
 	 */
 	private function loadChange( $rcid ) {
 		$dbr = wfGetDB( DB_REPLICA );
-		$res = $dbr->select(
+		$row = $dbr->selectRow(
 			'recentchanges',
 			'*',
 			[
@@ -276,8 +276,7 @@ class SpecialPatroller extends SpecialPage {
 			],
 			'Patroller::loadChange'
 		);
-		if ( $res->numRows() > 0 ) {
-			$row = $dbr->fetchObject( $res );
+		if ( $row ) {
 			return RecentChange::newFromRow( $row );
 		}
 		return false;
