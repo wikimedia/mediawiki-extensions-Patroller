@@ -377,11 +377,21 @@ class SpecialPatroller extends SpecialPage {
 						$oldRevisionRecord->getId()
 				);
 				$page = WikiPage::factory( $title );
-				$page->doEditContent(
-					$oldRevisionRecord->getContent( SlotRecord::MAIN ),
-					$comment,
-					EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
-				);
+				if ( method_exists( $page, 'doUserEditContent' ) ) {
+					// MW 1.36+
+					$page->doUserEditContent(
+						$oldRevisionRecord->getContent( SlotRecord::MAIN ),
+						$user,
+						$comment,
+						EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
+					);
+				} else {
+					$page->doEditContent(
+						$oldRevisionRecord->getContent( SlotRecord::MAIN ),
+						$comment,
+						EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
+					);
+				}
 			}
 			// Mark the edit patrolled so it doesn't bother us again
 			if ( $edit !== null ) {
