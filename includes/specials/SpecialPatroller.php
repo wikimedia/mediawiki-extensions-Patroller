@@ -376,7 +376,12 @@ class SpecialPatroller extends SpecialPage {
 						'" to r' .
 						$oldRevisionRecord->getId()
 				);
-				$page = WikiPage::factory( $title );
+				if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+					// MW 1.36+
+					$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+				} else {
+					$page = WikiPage::factory( $title );
+				}
 				if ( method_exists( $page, 'doUserEditContent' ) ) {
 					// MW 1.36+
 					$page->doUserEditContent(
