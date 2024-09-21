@@ -225,7 +225,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return false|RecentChange
 	 */
 	private function fetchChange( &$user ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$aid = $user->getActorId();
 		$res = $dbr->select(
 			[ 'page', 'recentchanges', 'patrollers' ],
@@ -267,7 +267,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool|RecentChange
 	 */
 	private function loadChange( $rcid ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$row = $dbr->selectRow(
 			'recentchanges',
 			'*',
@@ -290,7 +290,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool If rows were changed
 	 */
 	private function assignChange( &$edit ) {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 		$res = $dbw->insert(
 			'patrollers',
 			[
@@ -311,7 +311,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @todo Use it or lose it
 	 */
 	private function unassignChange( $rcid ) {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 		$dbw->delete(
 			'patrollers',
 			[
@@ -327,7 +327,7 @@ class SpecialPatroller extends SpecialPage {
 	 * keep the table size down as regards old assignments
 	 */
 	private function pruneAssignments() {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 		$dbw->delete(
 			'patrollers',
 			[
@@ -348,7 +348,7 @@ class SpecialPatroller extends SpecialPage {
 		$user = $this->getUser();
 		if ( !$user->getBlock( false ) ) {
 			// Check block against master
-			$dbw = wfGetDB( DB_PRIMARY );
+			$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 			$title = $edit->getTitle();
 			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
