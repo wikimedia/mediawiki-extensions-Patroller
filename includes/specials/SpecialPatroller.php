@@ -236,9 +236,9 @@ class SpecialPatroller extends SpecialPage {
 				'rc_title = page_title',
 				'rc_this_oldid = page_latest',
 				'rc_actor != ' . $aid,
-				'rc_bot'		=> '0',
+				'rc_bot'	=> '0',
 				'rc_patrolled'	=> '0',
-				'rc_type'		=> '0'
+				'rc_source'	=> RecentChange::SRC_EDIT,
 			],
 			__METHOD__,
 			[
