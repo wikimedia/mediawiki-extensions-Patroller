@@ -10,6 +10,8 @@
  * @link: https://mediawiki.org/wiki/Extension:Patroller
  */
 
+use MediaWiki\Html\Html;
+use MediaWiki\Linker\Linker;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
 
