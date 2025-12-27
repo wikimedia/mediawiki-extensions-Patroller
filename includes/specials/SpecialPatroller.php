@@ -210,8 +210,8 @@ class SpecialPatroller extends SpecialPage {
 		$form .= Html::closeElement( 'td' );
 		$form .= Html::closeElement( 'tr' );
 		$form .= Html::closeElement( 'table' );
-		$form .= Html::Hidden( 'wpRcId', $edit->getAttribute( 'rc_id' ) );
-		$form .= Html::Hidden( 'wpToken', $user->getEditToken() );
+		$form .= Html::hidden( 'wpRcId', $edit->getAttribute( 'rc_id' ) );
+		$form .= Html::hidden( 'wpToken', $user->getEditToken() );
 		$form .= Html::closeElement( 'form' );
 		$out->addHTML( $form );
 	}
