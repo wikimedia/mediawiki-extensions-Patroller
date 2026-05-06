@@ -22,7 +22,12 @@ class SpecialPatroller extends SpecialPage {
 	 * @return void
 	 */
 	public function __construct() {
-		parent::__construct( 'Patrol', 'patroller' );
+		parent::__construct( 'Patrol' );
+	}
+
+	/** @inheritDoc */
+	public function getRestriction(): string {
+		return 'patroller';
 	}
 
 	public function doesWrites() {
