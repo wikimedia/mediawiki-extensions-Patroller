@@ -41,7 +41,14 @@
 		]
 	},
 	"SpecialPages": {
-		"Patrol": "SpecialPatroller"
+		"Patrol": {
+			"class": "SpecialPatroller",
+			"services": [
+				"ConnectionProvider",
+				"RevisionLookup",
+				"WikiPageFactory"
+			]
+		}
 	},
 	"manifest_version": 1
 }

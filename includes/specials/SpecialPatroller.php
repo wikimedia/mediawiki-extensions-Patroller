@@ -12,16 +12,17 @@
 
 use MediaWiki\Html\Html;
 use MediaWiki\Linker\Linker;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\WikiPageFactory;
+use MediaWiki\Revision\RevisionLookup;
 use MediaWiki\Revision\SlotRecord;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class SpecialPatroller extends SpecialPage {
-	/**
-	 * Constructor
-	 *
-	 * @return void
-	 */
-	public function __construct() {
+	public function __construct(
+		private readonly IConnectionProvider $dbProvider,
+		private readonly RevisionLookup $revisionLookup,
+		private readonly WikiPageFactory $wikiPageFactory,
+	) {
 		parent::__construct( 'Patrol' );
 	}
 
@@ -232,7 +233,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return false|RecentChange
 	 */
 	private function fetchChange( &$user ) {
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = $this->dbProvider->getReplicaDatabase();
 		$aid = $user->getActorId();
 		$res = $dbr->select(
 			[ 'page', 'recentchanges', 'patrollers' ],
@@ -274,7 +275,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool|RecentChange
 	 */
 	private function loadChange( $rcid ) {
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = $this->dbProvider->getReplicaDatabase();
 		$row = $dbr->selectRow(
 			'recentchanges',
 			'*',
@@ -297,7 +298,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @return bool If rows were changed
 	 */
 	private function assignChange( &$edit ) {
-		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbw = $this->dbProvider->getPrimaryDatabase();
 		$res = $dbw->insert(
 			'patrollers',
 			[
@@ -318,7 +319,7 @@ class SpecialPatroller extends SpecialPage {
 	 * @todo Use it or lose it
 	 */
 	private function unassignChange( $rcid ) {
-		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbw = $this->dbProvider->getPrimaryDatabase();
 		$dbw->delete(
 			'patrollers',
 			[
@@ -334,7 +335,7 @@ class SpecialPatroller extends SpecialPage {
 	 * keep the table size down as regards old assignments
 	 */
 	private function pruneAssignments() {
-		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbw = $this->dbProvider->getPrimaryDatabase();
 		$dbw->delete(
 			'patrollers',
 			[
@@ -355,7 +356,7 @@ class SpecialPatroller extends SpecialPage {
 		$user = $this->getUser();
 		if ( !$user->getBlock( false ) ) {
 			// Check block against master
-			$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+			$dbw = $this->dbProvider->getPrimaryDatabase();
 			$title = $edit->getTitle();
 			// Prepare the comment
 			$comment = wfMessage( 'patrol-reverting', $comment )->inContentLanguage()->text();
@@ -371,8 +372,7 @@ class SpecialPatroller extends SpecialPage {
 			);
 			if ( $edit->getAttribute( 'rc_this_oldid' ) == $latest ) {
 				// Find the old revision
-				$oldRevisionRecord = MediaWikiServices::getInstance()
-					->getRevisionLookup()
+				$oldRevisionRecord = $this->revisionLookup
 					->getRevisionById( $edit->getAttribute( 'rc_last_oldid' ) );
 
 				// Revert the edit; keep the reversion itself out of recent changes
@@ -383,7 +383,7 @@ class SpecialPatroller extends SpecialPage {
 						'" to r' .
 						$oldRevisionRecord->getId()
 				);
-				$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+				$page = $this->wikiPageFactory->newFromTitle( $title );
 				$page->doUserEditContent(
 					$oldRevisionRecord->getContent( SlotRecord::MAIN ),
 					$user,
