@@ -383,27 +383,13 @@ class SpecialPatroller extends SpecialPage {
 						'" to r' .
 						$oldRevisionRecord->getId()
 				);
-				if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
-					// MW 1.36+
-					$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
-				} else {
-					$page = WikiPage::factory( $title );
-				}
-				if ( method_exists( $page, 'doUserEditContent' ) ) {
-					// MW 1.36+
-					$page->doUserEditContent(
-						$oldRevisionRecord->getContent( SlotRecord::MAIN ),
-						$user,
-						$comment,
-						EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
-					);
-				} else {
-					$page->doEditContent(
-						$oldRevisionRecord->getContent( SlotRecord::MAIN ),
-						$comment,
-						EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
-					);
-				}
+				$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+				$page->doUserEditContent(
+					$oldRevisionRecord->getContent( SlotRecord::MAIN ),
+					$user,
+					$comment,
+					EDIT_UPDATE & EDIT_MINOR & EDIT_SUPPRESS_RC
+				);
 			}
 			// Mark the edit patrolled so it doesn't bother us again
 			if ( $edit !== null ) {
