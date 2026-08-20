@@ -139,7 +139,7 @@ class SpecialPatroller extends SpecialPage {
 		$editAttribs = $edit->getAttributes();
 		$editAttribs['rc_patrolled'] = 1;
 		$edit->setAttribs( $editAttribs );
-		$list = ChangesList::newFromContext( RequestContext::GetMain() );
+		$list = ChangesList::newFromContext( $this->getContext() );
 		$out->addHTML(
 			$list->beginRecentChangesList() .
 			$list->recentChangesLine( $edit ) .
